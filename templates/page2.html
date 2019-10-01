@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Main page</title>
+</head>
+
+<body>
+        <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div class="row justify-content-center">
+                <div class="card">
+                        <h5 class="card-header">Video upload</h5>
+                        <div class="card-body justify-content-center" >
+                          <a href="{{url_for('upload')}}" class="btn btn-primary m-5 " >Upload Video</a>
+                        </div>
+                      </div>
+              </div>
+        </div>
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-expend-sm navbar-dark bg-dark">
+            <a href="#" class="navbar-barnd">
+                <img src="{{url_for('static',filename='img/logo-white.png')}}" class="img-rounded" alt="Cinque Terre">
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class='nav-item'><span style="font-size:30px;cursor:pointer" onclick="openNav()"><i class='fas fa-upload' style='font-size:48px;color:white'></i></span> </li>
+            </ul>
+        </nav>
+
+    </div>
+    <br>
+    <div class="container">
+        <div>
+            <nav class="navbar navbar-expend-sm navbar-light ">
+                <a href="#" class="navbar-barnd">
+                    <a hef="#">
+                        <h3> Content Manager <span class="badge badge-danger">{{notif}}</span>
+                            <span class="sr-only">unread messages</span></h3>
+                    </a>
+                </a>
+                <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto">
+                        <li class='nav-item'>
+
+                            <div class="input-group md-form form-sm form-2 pl-0">
+                                <form class="form-inline" action="#" method="get">
+                                <input class="form-control my-0 py-1 red-border" id="search_input" type="text" placeholder="Search" name="search_box"
+                                    aria-label="Search">
+                                     <button type="submit" class="btn btn-primary "> Search</button>
+                                </form>
+                                </div>
+                        </li>
+                    </ul>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class='nav-item'><a href="{{url_for('logout')}}" class="nav-link"><button type="button"
+                                class="btn btn-danger ">Log Out</button></a> </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class='nav-item'><a href="{{url_for('upload')}}" class="nav-link"><button type="button"
+                                class="btn btn-primary">Create Video</button></a> </li>
+                </ul>
+            </nav>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-3">
+                <div class="nav flex-column nav-pills" style="background-color: lightgrey ;" id="v-pills-tab"
+                    role="tablist" aria-orientation="vertical">
+
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                        aria-controls="v-pills-home" aria-selected="true">Videos</a>
+
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                        aria-controls="v-pills-profile" aria-selected="false">Categories</a>
+
+                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+                        aria-controls="v-pills-messages" aria-selected="false">Playlists</a>
+
+                </div>
+            </div>
+            <div class="col-9">
+                <div>
+                    <!--Table-->
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead style="background-color: lightgrey ;">
+                                <tr>
+                                    <th scope="col"><input type="checkbox"
+                                            aria-label="Checkbox for following text input"></th>
+                                    <th scope="col">Thumbnail</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Created_on</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                             {% for post in posts.items %}
+                                <tr>
+                                    <th scope="row"><input type="checkbox"
+                                            aria-label="Checkbox for following text input"></th>
+                                    {% set fname = 'img/' + post.thumb %}
+                                    <td><img src="{{url_for('static', filename=fname)}}" class="img-fluid img-thumbnail imgfix" alt="..."></td>
+                                    <td>{{post.name}}</td>
+                                    <td>{{post.ref}}</td>
+                                    <td class="fas fa-file-video"></td>
+                                    <td>{{post.date}}</td>
+                                    <td><2:00</td>
+                                    <td>Ready</td>
+
+                                </tr>
+                             {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <br><br>
+                <div class="col-12 ">
+                        <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+
+                                  {% for page_num in posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+                                    {% if page_num %}
+                                        {% if posts.page == page_num %}
+                                    <a class=" btn btn-info" href="{{url_for('video',page=page_num)}}">{{ page_num }}</a>
+                                        {% else %}
+                                    <a class="btn btn-outline-info" href="{{url_for('video',page=page_num)}}">{{ page_num }}</a>
+                                        {% endif %}
+                                    {% else %}
+
+                                        ...
+                                    {% endif %}
+                                  {% endfor %}
+                                    </a>
+                                  </li>
+                                </ul>
+                              </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/logic.js')}}"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+</body>
+
+</html>

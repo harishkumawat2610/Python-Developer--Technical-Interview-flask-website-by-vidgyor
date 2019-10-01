@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{{url_for('static', filename='css/tagsinput.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename='css/main.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename='dist/css/bootstrap-imageupload.css')}}" rel="stylesheet">
+
+    <style>
+
+
+        .imageupload {
+            margin: 20px 0;
+        }
+    </style>
+
+    <title>Upload page</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expend-sm navbar-dark bg-dark">
+            <a href="{{url_for('video')}}" class="navbar-barnd">
+                <img src="{{url_for('static',filename='img/logo-white.png')}}" class="img-rounded" alt="Cinque Terre">
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class='nav-item'><a href="{{url_for('logout')}}" class="nav-link">Log Out</a> </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <div class="embed-responsive embed-responsive-4by3 shadow-lg p-3 mb-5 bg-white rounded">
+                    {% set vname = 'up_image/' + post.video %}
+                    <iframe class="embed-responsive-item" src="{{url_for('static', filename=vname)}}"
+                        allowfullscreen> </iframe>
+                </div>
+
+
+                <div class="card shadow-lg p-3 mb-2 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa fa-angle-down" style="font-size:36px"> About this Video</i> </h5>
+                        <h6 class="card-subtitle mb-2 text-muted"></h6>
+                        <br><br>
+                        <p class="card-text">
+
+                        ID :{{post.ref}} <br>Creation date : {{post.date}}
+                        </p>
+                        <p class="card-text">
+
+                        Last updat 07/17/19    owner:template
+                        </p>
+                        <p class="card-text">
+
+                        Duration 00:33      Clipped:Auto Approvel:07/17/19
+
+
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-9">
+                <div>
+                    <div class="card ">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+
+                                <li class="nav-item">
+                                    <a class="nav-link active fa fa-pencil-square-o" style="font-size:30px;"
+                                        href="#signinfo" id="signuptab" data-toggle="tab" role="tab"
+                                        aria-controls="signinfo" aria-selected="false"> MetaData</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link fa fa-image" href="#Logininfo" style="font-size:30px;"
+                                        id="logintab" data-toggle="tab" role="tab" aria-controls="Logininfo"
+                                        aria-selected="true"> Thumbnail</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body ">
+                            <div class="tab-content" id=" myTabContent">
+                                <div class="tab-pane " id="Logininfo" role="tabpanel" aria-labelledby="Logininfo">
+
+
+                                    <div class="form-group">
+
+                                        <div class="container">
+
+                                            <!-- bootstrap-imageupload. -->
+                                            <div class="imageupload panel panel-default">
+
+                                                <div class="file-tab panel-body">
+                                                    <label class="btn btn-primary btn-file">
+                                                        <span>Browse</span>
+                                                        <!-- The file is stored here. -->
+                                                        <input type="file" name="image-file">
+                                                    </label>
+                                                    <button type="button" class="btn btn-danger">Delete image</button>
+                                                </div>
+                                                <div class="url-tab panel-body">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control hasclear"
+                                                            placeholder="Image URL">
+                                                        <div class="input-group-btn">
+                                                            <button type="button"
+                                                                class="btn btn-default">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-default">Remove</button>
+                                                    <!-- The URL is stored here. -->
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane active" id="signinfo" role="tabpanel" aria-labelledby="signinfo">
+                                    <form action="/edit/{{sno}}" method="post" novalidate>
+                                        <h2>MetaData</h2><br>
+                                        <div class="form-group">
+                                            <label for="exampleInputUser">Name</label>
+                                            <input type="text" class="form-control" name="title" id="exampleInputUser"
+                                                aria-describedby="emailHelp" placeholder="Enter User" value="{{post.name}}">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message">Description</label>
+                                            <textarea rows="5" class="form-control" placeholder="Message" name="message"
+                                                id="message" required
+                                                data-validation-required-message="Please enter a message." value="{{post.description}}"></textarea>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ttag">Tags</label>
+                                            <input type="text" data-role="tagsinput" name="tags" id="ttag" value="Vidgyor" value="{{post.tags}}">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="CategoriesInputUser">Categories</label>
+                                            <input type="text" class="form-control" id="CategoriesInputUser"
+                                                aria-describedby="emailHelp" name="cate" placeholder="Enter Categories" value="{{post.categories}}">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ReferenceInputUser">Reference ID</label>
+                                            <input type="text" class="form-control" id="ReferenceInputUser"
+                                                aria-describedby="emailHelp" name="rid" placeholder="Enter Reference ID" value="{{post.ref}}">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ReferenceInputUser">thumb</label>
+                                            <input type="text" class="form-control" id="ReferenceInputUserq"
+                                                aria-describedby="emailHelp" name="thumb" placeholder="Enter Image Name" value="{{post.thumb}}">
+
+                                        </div>
+                                        <div class="form-group" >
+                                            <label for="ReferenceInputUserqq">Video Name</label>
+                                            <input type="text" class="form-control" id="ReferenceInputUserqq"
+                                                aria-describedby="emailHelp" name="video" placeholder="Enter video name" value="{{post.video}}">
+
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary fa fa-upload"
+                                            style="font-size:36px"> Upload</button>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/tagsinput.js')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='dist/js/bootstrap-imageupload.js')}}"></script>
+
+    <script>
+        var $imageupload = $('.imageupload');
+        $imageupload.imageupload();
+
+    </script>
+
+</body>
+
+</html>

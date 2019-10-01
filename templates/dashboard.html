@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <title>Login page</title>
+  </head>
+<div>
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-9">
+
+        <h1>Basic Actions</h1>
+        <a href="{{url_for('video')}}"><button class="btn btn-primary glyphicon glyphicon-home"> Home </button></a>
+        <a href="{{url_for('upload')}}"><button class="btn btn-primary glyphicon glyphicon-plus"> Add Post </button></a>
+        <a href="{{url_for('logout')}}"><button class="btn btn-danger ">Log Out</button></a>
+
+
+          <hr>
+<!--          <h1>File Uploader</h1>-->
+
+<!--        <form action="/uploader" method="post" enctype="multipart/form-data">-->
+<!--          <input type="file" name="file1">-->
+<!--          <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--        </form>-->
+<!--      <hr>-->
+
+          <h1>Edit Posts</h1>
+
+            <div class="table-responsive">
+                        <table class="table">
+                            <thead style="background-color: lightgrey ;">
+                                <tr>
+                                    <th scope="col"><input type="checkbox"
+                                            aria-label="Checkbox for following text input"></th>
+                                    <th scope="col">thumb</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Tags</th>
+                                    <th scope="col">Categories</th>
+                                    <th scope="col">Reference ID</th>
+                                    <th scope="col">Thumbnail Name</th>
+                                    <th scope="col">Video Name</th>
+                                  <th scope="col">   Edit  </th>
+                                  <th scope="col">  Delete </th>
+
+                                </tr>
+                            </thead>
+                                <tbody>
+                                      {% for post in posts.items %}
+                                        <tr>
+                                          <th scope="row"><input type="checkbox"
+                                            aria-label="Checkbox for following text input"></th>
+                                    {% set fname = 'img/' + post.thumb %}
+                                    <td><img src="{{url_for('static', filename=fname)}}" class="img-fluid img-thumbnail imgfix" alt="..."></td>
+                                          <td>{{post.name}}</td>
+                                          <td>{{post.description}}</td>
+                                          <td>{{post.tags}}</td>
+                                          <td>{{post.categories}}</td>
+                                          <td>{{post.ref}}</td>
+                                          <td>{{post.thumb}}</td>
+                                          <td>{{post.video}}</td>
+                                          <td><a href="/edit/{{post.sno}}"> <button class="btn btn-primary glyphicon glyphicon-pencil"> Edit </button></a></td>
+                                          <td><a href="/delete/{{post.sno}}"><button class="btn btn-primary glyphicon glyphicon-trash"> Delete </button></a></td>
+                                        </tr>
+                                      {% endfor %}
+                                </tbody>
+                        </table>
+
+
+             </div>
+          </div>
+      <br><br>
+                <div class="col-12 ">
+                        <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+
+                                  {% for page_num in posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+                                    {% if page_num %}
+                                        {% if posts.page == page_num %}
+                                    <a class=" btn btn-info" href="{{url_for('login_board',page=page_num)}}">{{ page_num }}</a>
+                                        {% else %}
+                                    <a class="btn btn-outline-info" href="{{url_for('login_board',page=page_num)}}">{{ page_num }}</a>
+                                        {% endif %}
+                                    {% else %}
+
+                                        ...
+                                    {% endif %}
+                                  {% endfor %}
+                                    </a>
+                                  </li>
+                                </ul>
+                              </nav>
+                </div>
+        </div>
+  </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</html>
+
+
